@@ -19,4 +19,13 @@ describe "Shows" do
     page.should have_content "Family Guy"
     page.should have_content "http://somephoto.com"
   end
+
+  it "should be able to view existing shows in seperate" do
+    visit "/shows/1"
+    page.should have_content("Shows Item")
+    page.should have_content "Show ID"
+    page.should have_content "Show Name"
+    click_link("Shows")
+    page.should have_content("Shows List")
+  end
 end

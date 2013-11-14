@@ -18,4 +18,13 @@ class ShowsController < ApplicationController
       head(:unprocessable_entity)
     end
   end
+
+  def destroy
+    Show.find(params[:id]).destroy
+    redirect_to shows_path
+  end
+
+  def show
+    @show = Show.find(params[:id])
+  end
 end

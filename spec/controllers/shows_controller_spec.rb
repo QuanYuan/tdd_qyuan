@@ -62,4 +62,47 @@ describe ShowsController do
     end
   end
 
+  describe "#destroy" do
+    before do
+      @show_1 = FactoryGirl.create(:show)
+      @show_2 = FactoryGirl.create(:show)
+    end
+
+    def perform
+      delete :destroy, :id => @show_2.id
+    end
+
+    it "should redirect to index page" do
+      perform
+
+      response.should be_redirect
+      response.location.should == shows_url
+    end
+
+    it "should delete second show item" do
+      lambda do
+      perform
+    end.should change(Show, :count).by(-1)
+
+    show = Show.last
+    show.name.should == @show_1.name
+    show.picture.should == @show_1.picture
+
+    end
+
+  end
+
+  describe "#show" do
+    before do
+      @show = FactoryGirl.create(:show)
+    end
+
+    it "should be successful" do
+      get :show, :id => @show.id
+
+      response.should be_success
+      assigns[:show].should == @show
+    end
+  end
+
 end
